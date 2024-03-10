@@ -90,16 +90,18 @@
 
   <div id="root" class="container mt-5 mb-5 d-flex" style="height: calc(100vh - 10rem);">
     <main class="fs-2 align-items-stretch d-flex flex-column justify-content-between">
-      <section class="content-main">
-        Eu, <input type="text" id="client-name" style="width: auto; display: inline;" class="form-control fs-2"> <!-- Maria Cândida Teixeira da Silva -->, portador(a) do CPF <input id="client-CPF" type="text" style="width: auto; display: inline;" class="form-control fs-2"> <!-- 123.456.789-09 z-->, autorizo o cancelamento das minhas avaliações de crédito anteriores a data de hoje.
-        <br><br>
+      <form class="content-main">
+        <div id="data" style="line-height: 2.25;">
+          Eu, <input type="text" id="client-name" style="width: auto; display: inline;" class="form-control fs-2" min="5" maxlength="50" size="20" placeholder="José da Silva"><span id="info-name"><!-- Maria Cândida Teixeira da Silva --></span>, portador(a) do CPF <input id="client-CPF" type="text" size="14" placeholder="000.000.000-00" style="width: auto; display: inline;" class="form-control fs-2"><span id="info-CPF"><!-- 123.456.789-09 z--></span>, autorizo o cancelamento das minhas avaliações de crédito anteriores a data de hoje.
+        </div>
+        <br>
         <span id="operation-date">10/03/2024</span>
         <br><br>
         <div class="d-flex flex-column">
           <span>Assinatura:</span>
           <span class="text-muted fs-5 mt-1" style="text-wrap: balance;">Assine da mesma forma que a assinatura no documento de identificação apresentado</span>
         </div>
-      </section>
+      </form>
       <section class="d-flex flex-column">
         <span class="text-uppercase" id="operation-ID">19A7J14NK40</span>
         <span class="text-muted fs-5" id="operation-datetime">10/03/2024 11:34:09</span>
