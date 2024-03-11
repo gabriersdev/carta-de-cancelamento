@@ -95,6 +95,24 @@ import fns from './modules/functions.js';
         $(infoCPF).text('___.___.___-__');
       }
 
+      const shuffle = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      };
+
+      const id = shuffle(String(Date.now()).split('').concat($(clientName).val().match(/\b\w{1}/gi))).join('').toUpperCase().substr(0, 15);
+      const operationID = $(event.target.document).find('#operation-ID');
+
+      if (operationID.length !== 0) {
+        $('#aditional-infos').prepend(`<span class="text-uppercase" id="operation-ID">${id}</span>`);
+      } else {
+        $(operationID).text(id);
+        $(operationID).show();
+      }
+
       $(infoName).show();
       $(infoCPF).show();
     }
@@ -129,6 +147,8 @@ import fns from './modules/functions.js';
         $(infoCPF).text('');
         $(infoCPF).hide();
       }
+
+      $(event.target.document).find('#operation-ID').hide();
     }
 
     document.querySelectorAll('[data-recarrega-pagina]').forEach((botao) => {
