@@ -169,6 +169,23 @@ import fns from './modules/functions.js';
     verificarInputsRecarregamento();
   });
 
+  // Verifica parâmetros de URL
+  const urlParams = new URLSearchParams(window.location.search.replaceAll('+', ' '));
+  const params = {
+    nome: decodeURIComponent(urlParams.get('nome')).match(/[A-zÀ-ú ]/gi).join(''),
+    ide: decodeURIComponent(urlParams.get('ide')).match(/\d/gi).join(''),
+  }
+
+  if (params.nome && params.ide) {
+    if (params.ide.length === 11) {
+      $('#client-name').val(params.nome);
+      $('#client-CPF').val(params.ide);
+      // TODO: Bloquear campos e bloquear no retorno da impressão
+    }
+  } else if (params.nome || params.ide) {
+    // Informar que os parâmetros não foram definidos corretamente
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     tooltips();
     popovers();
