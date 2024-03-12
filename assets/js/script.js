@@ -52,6 +52,7 @@ import fns from './modules/functions.js';
     const infoCPF = $('span#info-CPF');
     const clientName = $('input#client-name');
     const clientCPF = $('input#client-CPF');
+    const btnPrint = $('#btn-print');
 
     // Add. máscaras
     const initialSizes = {
@@ -67,6 +68,9 @@ import fns from './modules/functions.js';
     $('input').on('input', (event) => {
       String(event.target.value).length > 0 && String(event.target.value).length > initialSizes[event.target.id] ? $(event.target).attr('size', event.target.value.length) : $(event.target).attr('size', initialSizes[event.target.id]);
     });
+
+    // Informando data e hora
+    $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
 
     // Print
     window.onbeforeprint = (event) => {
@@ -103,6 +107,7 @@ import fns from './modules/functions.js';
         return array;
       };
 
+      // Add. e exibindo ID
       const id = shuffle(String(Date.now()).split('').concat($(clientName).val().match(/\b\w{1}/gi))).join('').toUpperCase().substr(0, 15);
       const operationID = $(event.target.document).find('#operation-ID');
 
@@ -113,8 +118,12 @@ import fns from './modules/functions.js';
         $(operationID).show();
       }
 
+      // Atualizando data e hora
+      $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
+
       $(infoName).show();
       $(infoCPF).show();
+      $(btnPrint).hide();
     }
 
     window.onafterprint = (event) => {
@@ -149,6 +158,7 @@ import fns from './modules/functions.js';
       }
 
       $(event.target.document).find('#operation-ID').hide();
+      $(btnPrint).show();
     }
 
     document.querySelectorAll('[data-recarrega-pagina]').forEach((botao) => {

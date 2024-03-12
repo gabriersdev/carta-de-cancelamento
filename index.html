@@ -53,7 +53,7 @@
   <script src="./assets/js/frameworks/sweet-alert.js" defer crossorigin="anonymous"></script>
   <script type="module" src="./assets/js/script.js" defer crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="position: relative;">
   <noscript>
     <div class="box-no-script">
       <div class="texto-pagina-centralizado-alt">
@@ -104,11 +104,13 @@
       </form>
       <section class="d-flex flex-column" id="aditional-infos">
         <span class="d-none text-uppercase" id="operation-ID"></span>
-        <span class="text-muted fs-5" id="operation-datetime">10/03/2024 11:34:09</span>
+        <span class="text-muted fs-5" id="operation-datetime"></span>
         <span class="text-muted fs-5">Criado por Gabriel. Feito em Belo Horizonte</span>
       </section>
     </main>
   </div>
+
+  <button class="btn btn-primary" id="btn-print" style="position: fixed; bottom: 1rem; right: 1rem;" onclick="window.print()"><i class="bi bi-printer-fill"></i>&nbsp;Imprimir</button>
 
   <div id="load">
     <div class="overlay">
