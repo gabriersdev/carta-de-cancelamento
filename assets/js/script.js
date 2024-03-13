@@ -1,5 +1,5 @@
 import exibirDadosProjeto from './modules/about.js';
-import { criarTooltips, popovers, tooltips, verificarInputsRecarregamento } from './modules/util.js';
+import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
 import fns from './modules/functions.js';
 
@@ -82,7 +82,7 @@ import fns from './modules/functions.js';
       }
 
       if (params.nome && params.ide) {
-        params.nome = params.nome.join('');
+        params.nome = params.nome.join('').substring(0, initialSizes['client-name']);
 
         try {
           params.ide = params.ide.join('').match("(?<part1>[0-9]{3})(?<part2>[0-9]{3})(?<part3>[0-9]{3})(?<part4>[0-9]{2})").groups;
@@ -91,16 +91,15 @@ import fns from './modules/functions.js';
           params.ide = '';
         }
 
-        if (params.ide.length === 14) {
+        if (params.ide.length === 14 && verificarCPF(params.ide)) {
           // $('#client-name').val(params.nome);
           // $('#client-CPF').val(params.ide);
           return { nome: params.nome, ide: params.ide };
-          // TODO: Bloquear campos e bloquear no retorno da impressão
         } else {
           // Informar que os parâmetros não foram definidos corretamente
           Swal.fire({
             title: 'Atenção!',
-            text: 'Os parâmetros de URL não foram definidos corretamente.',
+            text: 'CPF informado não é válido!',
             icon: 'warning',
             confirmButtonText: 'OK'
           })
@@ -132,11 +131,17 @@ import fns from './modules/functions.js';
       }
 
       if (data.ide) {
-        if (data.ide.trim().length > 0) {
+        if (data.ide.trim().length > 0 && verificarCPF(data.ide)) {
           $(infoCPF).text(data.ide);
           $(clientCPF).hide();
           $(infoCPF).show();
         } else {
+          Swal.fire({
+            title: 'Atenção!',
+            text: 'CPF informado não é válido!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
           $(infoCPF).text('___.___.___-__');
         }
       } else {
@@ -160,25 +165,7 @@ import fns from './modules/functions.js';
       $(clientName).hide();
       $(clientCPF).hide();
 
-      if ($(clientName).val()) {
-        if ($(clientName).val().trim().length > 0) {
-          $(infoName).text($(clientName).val())
-        } else {
-          $(infoName).text('__________________________');
-        };
-      } else {
-        $(infoName).text('__________________________');
-      };
-
-      if ($(clientCPF).val()) {
-        if ($(clientCPF).val().trim().length > 0) {
-          $(infoCPF).text($(clientCPF).val());
-        } else {
-          $(infoCPF).text('___.___.___-__');
-        }
-      } else {
-        $(infoCPF).text('___.___.___-__');
-      }
+      showOnlyInfos({ nome: $(clientName).val(), ide: $(clientCPF).val() });
 
       const shuffle = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
