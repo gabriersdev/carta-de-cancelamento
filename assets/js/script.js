@@ -71,6 +71,87 @@ import fns from './modules/functions.js';
 
     // Informando data e hora
     $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
+    $('#operation-date').text(moment().format('DD/MM/YYYY'));
+
+    const verifyURLParams = () => {
+      // Verifica parâmetros de URL
+      const urlParams = new URLSearchParams(window.location.search.replaceAll('+', ' '));
+      const params = {
+        nome: urlParams.get('nome') ? decodeURIComponent(urlParams.get('nome')).match(/[A-zÀ-ú ]/gi) : null,
+        ide: urlParams.get('ide') ? decodeURIComponent(urlParams.get('ide')).match(/\d/gi) : null,
+      }
+
+      if (params.nome && params.ide) {
+        params.nome = params.nome.join('');
+
+        try {
+          params.ide = params.ide.join('').match("(?<part1>[0-9]{3})(?<part2>[0-9]{3})(?<part3>[0-9]{3})(?<part4>[0-9]{2})").groups;
+          params.ide = `${params.ide.part1}.${params.ide.part2}.${params.ide.part3}-${params.ide.part4}`;
+        } catch (error) {
+          params.ide = '';
+        }
+
+        if (params.ide.length === 14) {
+          // $('#client-name').val(params.nome);
+          // $('#client-CPF').val(params.ide);
+          return { nome: params.nome, ide: params.ide };
+          // TODO: Bloquear campos e bloquear no retorno da impressão
+        } else {
+          // Informar que os parâmetros não foram definidos corretamente
+          Swal.fire({
+            title: 'Atenção!',
+            text: 'Os parâmetros de URL não foram definidos corretamente.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          })
+        }
+
+      } else if (params.nome || params.ide) {
+        // Informar que os parâmetros não foram definidos corretamente
+        Swal.fire({
+          title: 'Atenção!',
+          text: 'Os parâmetros de URL não foram definidos corretamente.',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        })
+      }
+      return null;
+    };
+
+    const showOnlyInfos = (data) => {
+      if (data.nome) {
+        if (data.nome.trim().length > 0) {
+          $(infoName).text(data.nome);
+          $(clientName).hide();
+          $(infoName).show();
+        } else {
+          $(infoName).text('__________________________');
+        }
+      } else {
+        $(infoName).text('__________________________');
+      }
+
+      if (data.ide) {
+        if (data.ide.trim().length > 0) {
+          $(infoCPF).text(data.ide);
+          $(clientCPF).hide();
+          $(infoCPF).show();
+        } else {
+          $(infoCPF).text('___.___.___-__');
+        }
+      } else {
+        $(infoCPF).text('___.___.___-__');
+      }
+    }
+
+    const showOnlyInputs = () => {
+      $(clientName).show();
+      $(infoName).text('');
+      $(infoName).hide();
+      $(clientCPF).show();
+      $(infoCPF).text('');
+      $(infoCPF).hide();
+    }
 
     // Print
     window.onbeforeprint = (event) => {
@@ -120,6 +201,7 @@ import fns from './modules/functions.js';
 
       // Atualizando data e hora
       $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
+      $('#operation-date').text(moment().format('DD/MM/YYYY'));
 
       $(infoName).show();
       $(infoCPF).show();
@@ -128,6 +210,13 @@ import fns from './modules/functions.js';
 
     window.onafterprint = (event) => {
       $(event.target.document).find('#data').attr('style', 'line-height: 2.25');
+
+      $(event.target.document).find('#operation-ID').hide();
+      $(btnPrint).show();
+
+      if (verifyURLParams()) {
+        return false;
+      }
 
       if ($(clientName).val()) {
         if ($(clientName).val().trim().length > 0) {
@@ -156,9 +245,13 @@ import fns from './modules/functions.js';
         $(infoCPF).text('');
         $(infoCPF).hide();
       }
+    }
 
-      $(event.target.document).find('#operation-ID').hide();
-      $(btnPrint).show();
+    if (verifyURLParams()) {
+      const { nome, ide } = verifyURLParams();
+      showOnlyInfos({ nome, ide });
+      $('#client-name').val(nome);
+      $('#client-CPF').val(ide);
     }
 
     document.querySelectorAll('[data-recarrega-pagina]').forEach((botao) => {
@@ -168,23 +261,6 @@ import fns from './modules/functions.js';
     });
     verificarInputsRecarregamento();
   });
-
-  // Verifica parâmetros de URL
-  const urlParams = new URLSearchParams(window.location.search.replaceAll('+', ' '));
-  const params = {
-    nome: decodeURIComponent(urlParams.get('nome')).match(/[A-zÀ-ú ]/gi).join(''),
-    ide: decodeURIComponent(urlParams.get('ide')).match(/\d/gi).join(''),
-  }
-
-  if (params.nome && params.ide) {
-    if (params.ide.length === 11) {
-      $('#client-name').val(params.nome);
-      $('#client-CPF').val(params.ide);
-      // TODO: Bloquear campos e bloquear no retorno da impressão
-    }
-  } else if (params.nome || params.ide) {
-    // Informar que os parâmetros não foram definidos corretamente
-  }
 
   window.addEventListener('DOMContentLoaded', () => {
     tooltips();
