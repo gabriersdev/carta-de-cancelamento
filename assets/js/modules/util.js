@@ -448,7 +448,7 @@ const verificarInputsRecarregamento = () => {
   if(true){
     window.onbeforeunload = (evento) => {
       // Verificar se há algo a preservar
-      if(Array.from($('input, textarea')).filter(e => e.checked === undefined ? e.value !== "R$ 0,00" && e.value.trim().length > 0 : '').length > 0){
+      if(Array.from($('input, textarea')).filter(e => e.value.trim().length > 0).length > 0){
         evento.preventDefault();
       }else{
         // Não há o que preservar

@@ -1,5 +1,5 @@
 import exibirDadosProjeto from './modules/about.js';
-import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
+import { SwalAlert, criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
 import fns from './modules/functions.js';
 
@@ -82,8 +82,17 @@ import fns from './modules/functions.js';
     });
 
     // Informando data e hora
-    $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
-    $('#operation-date').text(moment().format('DD/MM/YYYY'));
+    if (moment()) {
+      $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
+      $('#operation-date').text(moment().format('DD/MM/YYYY'));
+    } else {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Não foi possível atualizar a data e hora. Recarregue a página e tente novamente.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
 
     const verifyURLParams = () => {
       // Verifica parâmetros de URL
@@ -199,8 +208,17 @@ import fns from './modules/functions.js';
       }
 
       // Atualizando data e hora
-      $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
-      $('#operation-date').text(moment().format('DD/MM/YYYY'));
+      if (moment()) {
+        $('#operation-datetime').text(moment().format('DD/MM/YYYY HH:mm:ss'));
+        $('#operation-date').text(moment().format('DD/MM/YYYY'));
+      } else {
+        Swal.fire({
+          title: 'Atenção!',
+          text: 'Não foi possível atualizar a data e hora. Recarregue a página e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
 
       $(infoName).show();
       $(infoCPF).show();
@@ -217,6 +235,7 @@ import fns from './modules/functions.js';
         return false;
       }
 
+      // TODO - Refatorar
       if ($(clientName).val()) {
         if ($(clientName).val().trim().length > 0) {
           $(clientName).val($(infoName).text());
@@ -258,6 +277,7 @@ import fns from './modules/functions.js';
         window.location.reload();
       });
     });
+
     verificarInputsRecarregamento();
   });
 
