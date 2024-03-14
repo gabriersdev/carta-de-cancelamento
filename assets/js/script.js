@@ -67,6 +67,18 @@ import fns from './modules/functions.js';
     // Eventos de escuta
     $('input').on('input', (event) => {
       String(event.target.value).length > 0 && String(event.target.value).length > initialSizes[event.target.id] ? $(event.target).attr('size', event.target.value.length) : $(event.target).attr('size', initialSizes[event.target.id]);
+
+      if (event.target.id === 'client-CPF') {
+        if (verificarCPF(event.target.value)) {
+          event.target.setAttribute('title', 'CPF válido!');
+          event.target.classList.remove('is-invalid');
+          event.target.classList.add('is-valid');
+        } else {
+          event.target.setAttribute('title', 'CPF inválido!');
+          event.target.classList.add('is-invalid');
+          event.target.classList.remove('is-valid');
+        }
+      }
     });
 
     // Informando data e hora
