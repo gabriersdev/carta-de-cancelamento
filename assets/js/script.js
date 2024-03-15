@@ -237,8 +237,6 @@ import fns from './modules/functions.js';
 
       // TODO - Refatorar
       if ($(clientName).val()) {
-        showOnlyInputs();
-
         if ($(clientName).val().trim().length > 0) {
           $(clientName).val($(infoName).text());
           $(clientName).show();
@@ -253,11 +251,16 @@ import fns from './modules/functions.js';
       }
 
       if ($(clientCPF).val()) {
-        if ($(clientCPF).val().trim().length > 0) {
+        if ($(clientCPF).val().trim().length > 0 && verificarCPF($(clientCPF).val())) {
           $(clientCPF).val($(infoCPF).text());
           $(clientCPF).show();
           $(infoCPF).text('');
-          $(infoCPF).hide('');
+          $(infoCPF).hide();
+        } else {
+          $(clientCPF).val('');
+          $(clientCPF).show();
+          $(infoCPF).text('');
+          $(infoCPF).hide();
         }
       } else if (infoCPF.text() === '___.___.___-__' ) {
         $(clientCPF).val('');
