@@ -237,6 +237,8 @@ import fns from './modules/functions.js';
 
       // TODO - Refatorar
       if ($(clientName).val()) {
+        showOnlyInputs();
+
         if ($(clientName).val().trim().length > 0) {
           $(clientName).val($(infoName).text());
           $(clientName).show();
