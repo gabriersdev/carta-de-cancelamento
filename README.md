@@ -7,8 +7,8 @@ Esse projeto pode ser acessado [através desse link.][link-projeto] Através del
 ## Funcionalides
 
 - Receber dados do cliente via parâmetro:
-  - nome, parâmetro `nome`
-  - CPF, parâmetro `ide`
+  - nome, através do parâmetro `nome`
+  - CPF, através do parâmetro `ide`
 - Informar se o CPF é válido ou não
 - Imprimir o conteúdo carta
 
