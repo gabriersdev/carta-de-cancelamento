@@ -103,7 +103,7 @@ import fns from './modules/functions.js';
       }
 
       if (params.nome && params.ide) {
-        params.nome = params.nome.join('').substring(0, initialSizes['client-name']);
+        params.nome = params.nome.join('').substring(0, 50);
 
         try {
           params.ide = params.ide.join('').match("(?<part1>[0-9]{3})(?<part2>[0-9]{3})(?<part3>[0-9]{3})(?<part4>[0-9]{2})").groups;
