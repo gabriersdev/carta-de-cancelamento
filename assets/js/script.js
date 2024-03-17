@@ -179,8 +179,7 @@ import fns from './modules/functions.js';
       $(infoCPF).hide();
     }
 
-    // Print
-    window.onbeforeprint = (event) => {
+    const beforePrint = (event) => {
       $(event.target.document).find('#data').attr('style', 'line-height: 1.5');
 
       $(clientName).hide();
@@ -222,14 +221,11 @@ import fns from './modules/functions.js';
 
       $(infoName).show();
       $(infoCPF).show();
-      $(btnPrint).hide();
     }
 
-    window.onafterprint = (event) => {
+    const afterPrint = (event) => {
       $(event.target.document).find('#data').attr('style', 'line-height: 2.25');
-
       $(event.target.document).find('#operation-ID').hide();
-      $(btnPrint).show();
 
       if (verifyURLParams()) {
         return false;
@@ -270,6 +266,15 @@ import fns from './modules/functions.js';
       }
     }
 
+    // Print
+    window.onbeforeprint = (event) => {
+      beforePrint(event);
+    }
+
+    window.onafterprint = (event) => {
+      afterPrint(event);
+    }
+
     if (verifyURLParams()) {
       const { nome, ide } = verifyURLParams();
       showOnlyInfos({ nome, ide });
@@ -284,6 +289,20 @@ import fns from './modules/functions.js';
     });
 
     verificarInputsRecarregamento();
+
+    window.printPage = () => {
+      beforePrint({ target: window });
+      printJS({
+        printable: 'root',
+        type: 'html',
+        targetStyles: ['*'],
+        css: 'assets/css/style.css',
+        scanStyles: false,
+        style: '@page { size: A4; margin: 2rem; }',
+        documentTitle: 'Cartas de Cancelamento'
+      });
+      afterPrint({ target: window });
+    };
   });
 
   window.addEventListener('DOMContentLoaded', () => {
