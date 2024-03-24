@@ -1,9 +1,12 @@
 import exibirDadosProjeto from './modules/about.js';
-import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
+import { SwalAlert, criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
 import fns from './modules/functions.js';
 
 (() => {
+  const infoNamePlace = '__________________________';
+  const infoCPFPlace = '___.___.___-__';
+
   function atribuirLinks() {
     const linkElementos = document.querySelectorAll('[data-link]');
 
@@ -160,10 +163,10 @@ import fns from './modules/functions.js';
           $(clientName).hide();
           $(infoName).show();
         } else {
-          $(infoName).text('__________________________');
+          $(infoName).text(infoNamePlace);
         }
       } else {
-        $(infoName).text('__________________________');
+        $(infoName).text(infoNamePlace);
       }
 
       if (data.ide) {
@@ -178,20 +181,46 @@ import fns from './modules/functions.js';
             icon: 'warning',
             confirmButtonText: 'OK'
           });
-          $(infoCPF).text('___.___.___-__');
+          $(infoCPF).text(infoCPFPlace);
         }
       } else {
-        $(infoCPF).text('___.___.___-__');
+        $(infoCPF).text(infoCPFPlace);
       }
     }
 
     const showOnlyInputs = () => {
-      $(clientName).show();
-      $(infoName).text('');
-      $(infoName).hide();
-      $(clientCPF).show();
-      $(infoCPF).text('');
-      $(infoCPF).hide();
+      if ($(clientName).val()) {
+        if ($(clientName).val().trim().length > 0) {
+          $(clientName).val($(infoName).text());
+          $(clientName).show();
+          $(infoName).text('');
+          $(infoName).hide();
+        }
+      } else if (infoName.text() === infoNamePlace) {
+        $(clientName).val('');
+        $(clientName).show();
+        $(infoName).text('');
+        $(infoName).hide();
+      }
+
+      if ($(clientCPF).val()) {
+        if ($(clientCPF).val().trim().length > 0 && verificarCPF($(clientCPF).val())) {
+          $(clientCPF).val($(infoCPF).text());
+          $(clientCPF).show();
+          $(infoCPF).text('');
+          $(infoCPF).hide();
+        } else {
+          $(clientCPF).val('');
+          $(clientCPF).show();
+          $(infoCPF).text('');
+          $(infoCPF).hide();
+        }
+      } else if (infoCPF.text() === infoCPFPlace ) {
+        $(clientCPF).val('');
+        $(clientCPF).show();
+        $(infoCPF).text('');
+        $(infoCPF).hide();
+      }
     }
 
     const beforePrint = (event) => {
@@ -246,46 +275,15 @@ import fns from './modules/functions.js';
         return false;
       }
 
-      // TODO - Refatorar
-      if ($(clientName).val()) {
-        if ($(clientName).val().trim().length > 0) {
-          $(clientName).val($(infoName).text());
-          $(clientName).show();
-          $(infoName).text('');
-          $(infoName).hide();
-        }
-      } else if (infoName.text() === '__________________________') {
-        $(clientName).val('');
-        $(clientName).show();
-        $(infoName).text('');
-        $(infoName).hide();
-      }
-
-      if ($(clientCPF).val()) {
-        if ($(clientCPF).val().trim().length > 0 && verificarCPF($(clientCPF).val())) {
-          $(clientCPF).val($(infoCPF).text());
-          $(clientCPF).show();
-          $(infoCPF).text('');
-          $(infoCPF).hide();
-        } else {
-          $(clientCPF).val('');
-          $(clientCPF).show();
-          $(infoCPF).text('');
-          $(infoCPF).hide();
-        }
-      } else if (infoCPF.text() === '___.___.___-__' ) {
-        $(clientCPF).val('');
-        $(clientCPF).show();
-        $(infoCPF).text('');
-        $(infoCPF).hide();
-      }
+      showOnlyInputs();
     }
 
-    // Print
+    // Antes da impressão
     window.onbeforeprint = (event) => {
       beforePrint(event);
     }
 
+    // Depois da impressão
     window.onafterprint = (event) => {
       afterPrint(event);
     }
