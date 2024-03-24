@@ -1,17 +1,17 @@
 {
-  "name": "Nome da aplicação",
-  "description": "Descrição sucinta da aplicação",
-  "short_name": "Nome da aplicação ou 'nome curto' se houver",
+  "name": "Carta de Cancelamento",
+  "description": "Crie cartas de cancelamento para cancelar avaliações de crédito.",
+  "short_name": "Carta de Cancelamento",
   "background": "#F6F6F6",
   "icons": [
     {
-      "src": "... PNG",
-      "size": "16x16",
+      "src": "/assets/img/example.png",
+      "size": "1470x752",
       "type": "png"
     },
     {
-      "src": "... SVG",
-      "size": "16x20",
+      "src": "/assets/img/favicon.svg",
+      "size": "100x100",
       "type": "svg"
     }
   ]

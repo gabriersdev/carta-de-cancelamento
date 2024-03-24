@@ -1,5 +1,5 @@
 import exibirDadosProjeto from './modules/about.js';
-import { SwalAlert, criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
+import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
 import fns from './modules/functions.js';
 
@@ -94,12 +94,27 @@ import fns from './modules/functions.js';
       });
     }
 
+        window.printPage = () => {
+      beforePrint({ target: window });
+      printJS({
+        printable: 'root',
+        type: 'html',
+        targetStyles: ['*'],
+        css: 'assets/css/style.css',
+        scanStyles: false,
+        style: '@page { size: A4; margin: 2rem; }',
+        documentTitle: 'Cartas de Cancelamento'
+      });
+      afterPrint({ target: window });
+    };
+
     const verifyURLParams = () => {
       // Verifica parâmetros de URL
       const urlParams = new URLSearchParams(window.location.search.replaceAll('+', ' '));
       const params = {
         nome: urlParams.get('nome') ? decodeURIComponent(urlParams.get('nome')).match(/[A-zÀ-ú ]/gi) : null,
         ide: urlParams.get('ide') ? decodeURIComponent(urlParams.get('ide')).match(/\d/gi) : null,
+        act: urlParams.get('act') ? decodeURIComponent(urlParams.get('act')) : null
       }
 
       if (params.nome && params.ide) {
@@ -115,7 +130,7 @@ import fns from './modules/functions.js';
         if (params.ide.length === 14 && verificarCPF(params.ide)) {
           // $('#client-name').val(params.nome);
           // $('#client-CPF').val(params.ide);
-          return { nome: params.nome, ide: params.ide };
+          return { nome: params.nome, ide: params.ide, act: params.act };
         } else {
           // Informar que os parâmetros não foram definidos corretamente
           Swal.fire({
@@ -276,10 +291,14 @@ import fns from './modules/functions.js';
     }
 
     if (verifyURLParams()) {
-      const { nome, ide } = verifyURLParams();
+      const { nome, ide, act } = verifyURLParams();
       showOnlyInfos({ nome, ide });
       $('#client-name').val(nome);
       $('#client-CPF').val(ide);
+
+      if (act === 'print') {
+        window.printPage();
+      }
     }
 
     document.querySelectorAll('[data-recarrega-pagina]').forEach((botao) => {
@@ -289,20 +308,6 @@ import fns from './modules/functions.js';
     });
 
     verificarInputsRecarregamento();
-
-    window.printPage = () => {
-      beforePrint({ target: window });
-      printJS({
-        printable: 'root',
-        type: 'html',
-        targetStyles: ['*'],
-        css: 'assets/css/style.css',
-        scanStyles: false,
-        style: '@page { size: A4; margin: 2rem; }',
-        documentTitle: 'Cartas de Cancelamento'
-      });
-      afterPrint({ target: window });
-    };
   });
 
   window.addEventListener('DOMContentLoaded', () => {
