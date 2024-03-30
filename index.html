@@ -46,7 +46,6 @@
   <script src="./assets/js/frameworks/fileSaver.js" async="true" crossorigin="anonymous"></script>
   <script src="./assets/js/frameworks/jquery-mask.js" defer crossorigin="anonymous"></script>
   <script src="./assets/js/frameworks/pooper.js" defer crossorigin="anonymous"></script>
-  <script src="./assets/js/frameworks/print.min.js" defer crossorigin="anonymous"></script>
   <script src="./assets/js/frameworks/sweet-alert.js" defer crossorigin="anonymous"></script>
   <script type="module" src="./assets/js/script.js" defer crossorigin="anonymous"></script>
 </head>
@@ -70,7 +69,7 @@
     <main class="fs-2 align-items-stretch d-flex flex-column justify-content-between">
       <form class="content-main">
         <div id="data" style="line-height: 2.25;">
-          Eu, <input type="text" id="client-name" style="width: auto; display: inline;" class="form-control fs-2 text-capitalize" min="5" maxlength="50" size="20" placeholder="José da Silva"><span id="info-name" class="text-capitalize"><!-- Maria Cândida Teixeira da Silva --></span>, portador(a) do CPF <input id="client-CPF" type="text" size="14" placeholder="000.000.000-00" style="width: auto; display: inline;" class="form-control fs-2"><span id="info-CPF"><!-- 123.456.789-09 z--></span>, autorizo o cancelamento das minhas avaliações de crédito anteriores a data de hoje.
+          Eu, <input type="text" id="client-name" style="width: auto; display: inline;" class="form-control fs-2 text-uppercase" min="5" maxlength="50" size="20" placeholder="José da Silva"><span id="info-name" class="text-capitalize"><!-- Maria Cândida Teixeira da Silva --></span>, portador(a) do CPF <input id="client-CPF" type="text" size="14" placeholder="000.000.000-00" style="width: auto; display: inline;" class="form-control fs-2"><span id="info-CPF"><!-- 123.456.789-09 z--></span>, autorizo o cancelamento das minhas avaliações de crédito anteriores a data de hoje.
         </div>
         <br>
         <span id="operation-date">10/03/2024</span>
@@ -96,6 +95,7 @@
     </div>
   </div>
 
+  <script src="./assets/js/frameworks/print.min.js" crossorigin="anonymous"></script>
   <script src="./assets/js/frameworks/moment.js" async="true" crossorigin="anonymous"></script>
 </body>
 </html>

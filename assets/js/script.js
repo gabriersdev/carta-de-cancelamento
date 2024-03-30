@@ -1,5 +1,5 @@
 import exibirDadosProjeto from './modules/about.js';
-import { SwalAlert, criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
+import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
 import fns from './modules/functions.js';
 
@@ -97,7 +97,7 @@ import fns from './modules/functions.js';
       });
     }
 
-        window.printPage = () => {
+    window.printPage = () => {
       beforePrint({ target: window });
       printJS({
         printable: 'root',
@@ -106,7 +106,7 @@ import fns from './modules/functions.js';
         css: 'assets/css/style.css',
         scanStyles: false,
         style: '@page { size: A4; margin: 2rem; }',
-        documentTitle: 'Cartas de Cancelamento'
+        documentTitle: 'Carta de Cancelamento'
       });
       afterPrint({ target: window });
     };
@@ -224,6 +224,7 @@ import fns from './modules/functions.js';
     }
 
     const beforePrint = (event) => {
+      $(event.target.document).find('#client-name').val(document.querySelector('#client-name').value.toUpperCase() || '');
       $(event.target.document).find('#data').attr('style', 'line-height: 1.5');
 
       $(clientName).hide();

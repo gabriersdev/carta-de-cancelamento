@@ -2,6 +2,9 @@
   "name": "Carta de Cancelamento",
   "description": "Crie cartas de cancelamento para cancelar avaliações de crédito.",
   "short_name": "Carta de Cancelamento",
+  "developer": "Gabriel Ribeiro",
+  "version": "1.0.0",
+  "release_date": "30-03-2024 00:00:00",
   "background": "#F6F6F6",
   "icons": [
     {

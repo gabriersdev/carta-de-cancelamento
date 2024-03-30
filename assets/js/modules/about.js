@@ -19,6 +19,11 @@ let dados_do_projeto = {
 
 const novas_funcionalidades = [
   // Lista de novas funcionalidades
+  'Adicionado suporte a Web Components',
+  'Adicionado download da carta de cancelamento com Print.js',
+  'Validação dos dados preenchidos no formulário de cancelamento',
+  'Feedback dos dados preenchidos no formulário com SweetAlert2',
+  'Recebimento de dados do formulário de cancelamento via parâmetro GET na URL',
 ];
 
 // Carregando dados do arquivo de manifest.json
