@@ -1,7 +1,6 @@
 import exibirDadosProjeto from './modules/about.js';
 import { criarTooltips, popovers, tooltips, verificarCPF, verificarInputsRecarregamento } from './modules/util.js';
 import dados from './modules/data.js';
-import fns from './modules/functions.js';
 
 (() => {
   const infoNamePlace = '__________________________';
@@ -26,7 +25,7 @@ import fns from './modules/functions.js';
     const elementos = document.querySelectorAll('[data-action]');
 
     const acoes = {
-      'acao': fns.action
+      // 'acao': fns.action
     }
 
     elementos.forEach((acao) => {
