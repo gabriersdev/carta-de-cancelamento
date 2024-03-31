@@ -4,7 +4,15 @@ Esse projeto pode ser acessado [através desse link.][link-projeto] Através del
 
 ![Imagem de exemplo do projeto][img-exemplo-projeto]
 
-## Funcionalides
+## Novas features
+
+- Adicionado suporte a Web Components
+- Adicionado download da carta de cancelamento com Print.js
+- Validação dos dados preenchidos no formulário de cancelamento
+- Feedback dos dados preenchidos no formulário com SweetAlert2
+- Recebimento de dados do formulário de cancelamento via parâmetro GET na URL
+
+## Funcionalidades
 
 - Receber dados do cliente via parâmetro:
   - nome, através do parâmetro `nome`
