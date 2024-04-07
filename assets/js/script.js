@@ -291,12 +291,15 @@ import dados from './modules/data.js';
     if (verifyURLParams()) {
       const { nome, ide, act } = verifyURLParams();
       showOnlyInfos({ nome, ide });
-      $('#client-name').val(nome);
+      $('#client-name').val(nome.toUpperCase());
       $('#client-CPF').val(ide);
 
       if (act === 'print') {
         window.printPage();
       }
+
+      // Forçando a exibição do nome em maiúsculo
+      $('#info-name').text($('#info-name').text().toUpperCase() || '');
     }
 
     document.querySelectorAll('[data-recarrega-pagina]').forEach((botao) => {

@@ -56,6 +56,10 @@ body{
   word-wrap: break-word;
 }
 
+#client-name, #client-CPF{
+  text-transform: uppercase;
+}
+
 @media print {
   .container{
     width: 100% !important;
