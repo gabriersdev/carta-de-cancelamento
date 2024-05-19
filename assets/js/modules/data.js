@@ -1,11 +1,11 @@
 const links = [
   {
     id: 'github-dev',
-    link: 'https://github.com/gabrieszin'
+    link: 'https://github.com/gabriersdev'
   },
   {
     id: 'github-projeto',
-    link: 'https://github.com/gabrieszin/carta-de-cancelamento'
+    link: 'https://github.com/gabriersdev/carta-de-cancelamento'
   },
 ]
 

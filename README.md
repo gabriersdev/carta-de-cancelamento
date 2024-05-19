@@ -27,4 +27,4 @@ Esse projeto pode ser acessado [através desse link.][link-projeto] Através del
 
 <!-- Variables -->
 [img-exemplo-projeto]: ./assets/img/example.png
-[link-projeto]: https://gabrieszin.github.io/carta-de-cancelamento
+[link-projeto]: https://gabriersdev.github.io/carta-de-cancelamento
